@@ -1,1 +1,24 @@
 
+.banner {
+    background: url('https://assets.cinemark-core.com/5db771be04daec00076df3f5/content/covers/67e6aeaec1eed6dabac25e3e/mobileresponsive/4x3-con-cine-club-pro-abril-1743171246718') no-repeat center center;
+    background-size: cover;
+    height: 400px;
+  }
+  
+  /* Navegación con espaciado */
+  .nav-link {
+    margin-left: 15px;
+  }
+  
+  /* Estilo para botones principales */
+  .btn-danger {
+    font-weight: bold;
+  }
+  
+  /* Responsive para pantallas pequeñas */
+  @media (max-width: 576px) {
+    .banner {
+      height: 250px;
+    }
+  }
+  
