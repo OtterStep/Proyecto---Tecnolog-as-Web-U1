@@ -1,25 +1,39 @@
 
-.carousel-inner{
-  height: 400px;
+@media (max-width: 770px) {
+  .carousel-control-prev,
+  .carousel-control-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15%;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    width: 2rem;
+    height: 2rem;
+  }
 }
-  
-  /* Navegación con espaciado */
-  .nav-link {
-    margin-left: 15px;
-  }
-  
-  /* Estilo para botones principales */
-  .btn-danger {
-    font-weight: bold;
-  }
-  
-  /* Responsive para pantallas pequeñas */
-  @media (max-width: 576px) {
-    .banner {
-      height: 250px;
-    }
-  }
-  .bg-danger{
-    
-  }
-  
+
+.mapa path {
+  fill: #E63946;
+  stroke: rgb(0, 0, 0);
+}
+
+.mapa :hover {
+  fill: rgb(226, 223, 223);
+}
+
+.menu-link {
+  transition: color 0.2s ease, font-weight 0.2s ease;
+}
+
+.menu-link:hover {
+  color: #b40a0a;
+  font-weight: bold;
+}
+
+.whatsapp {
+  z-index: 1050;
+  width: 60px;
+  height: 60px;
+}
