@@ -1,0 +1,94 @@
+
+@media (max-width: 770px) {
+  .carousel-control-prev,
+  .carousel-control-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15%;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.mapa path {
+  fill: #E63946;
+  stroke: #000000;
+}
+
+.mapa :hover {
+  fill: #f0ebd0;
+}
+
+.mapa-tamaño {
+  width: 350px;
+}
+
+.localidad {
+  width: 400px;
+}
+
+@media (min-width: 600px) {
+  .mapa-tamaño,
+  .localidad {
+    width: 550px;
+  }
+}
+
+
+.menu-link {
+  transition: color 0.2s ease, font-weight 0.2s ease;
+}
+
+.menu-link:hover {
+  color: #b40a0a;
+  font-weight: bold;
+}
+
+.whatsapp {
+  background-color: #24d465;
+  border: #0d883a;
+  z-index: 1050;
+  width: 60px;
+  height: 60px;
+}
+
+.bi-whatsapp {
+  color: white;
+}
+
+.whatsapp:hover {
+  background-color: #0d883a;
+}
+
+header {
+  background-color: #f0ebd0;
+}
+
+.estreno {
+  background-color: #b80000;
+}
+
+.info {
+  color: #ff0101;
+  border-radius : 20px;
+  border-color: #ff0101;
+}
+
+.info:hover {
+  background-color: #DC3545;
+  color: #ffffff;
+}
+.nav-link{
+  color: #b40a0a;
+}
+.nav-link:hover{
+  color: #4e4646;
+}
+
+.card-text{
+  font-size: small;
+}
