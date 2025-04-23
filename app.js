@@ -125,12 +125,13 @@ document.addEventListener('DOMContentLoaded', function () {
         // Función para actualizar la lista de productos seleccionados
         function updateProductList() {
             productList.innerHTML = ''; // Limpia la lista actual
+            resumen = ""; // Reinicia el resumen
             quantities.forEach((quantity, i) => {
                 if (quantity > 0) {
                     const listItem = document.createElement('li');
                     const productTotal = (quantity * prices[i]).toFixed(2); // Calcula el total por producto
                     listItem.textContent = `${cards[i].querySelector('.card-title').textContent} x${quantity} - $${productTotal}`;
-                    resumen = resumen + `${cards[i].querySelector('.card-title').textContent} x${quantity} - $${productTotal}\n`;
+                    resumen = resumen + `${cards[i].querySelector('.card-title').textContent} x${quantity} - $${productTotal}<br>`;
                     productList.appendChild(listItem);
                 }
             });
@@ -217,3 +218,70 @@ document.getElementById('metodoPago').addEventListener('change', function () {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    if (window.location.pathname.includes('formato.html')) {
+        const confirmButton = document.getElementById('confirmPurchaseButton');
+        const thankYouModal = new bootstrap.Modal(document.getElementById('thankYouModal'));
+
+        confirmButton.addEventListener('click', function () {
+            // Obtener los valores de los campos del formulario
+            const nombre = document.getElementById('nombre').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const metodoPago = document.getElementById('metodoPago').value;
+            const terminos = document.getElementById('terminos').checked;
+
+            let isValid = true;
+            let errorMessage = '';
+
+            // Validar campos obligatorios
+            if (!nombre) {
+                isValid = false;
+                errorMessage += 'El campo "Nombre completo" es obligatorio.\n';
+            }
+
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                isValid = false;
+                errorMessage += 'El campo "Correo electrónico" es obligatorio y debe tener un formato válido.\n';
+            }
+
+            if (!metodoPago || metodoPago === 'Selecciona un método de pago') {
+                isValid = false;
+                errorMessage += 'Debe seleccionar un método de pago.\n';
+            }
+
+            if (!terminos) {
+                isValid = false;
+                errorMessage += 'Debe aceptar los términos y condiciones.\n';
+            }
+
+            // Validar campos adicionales si el método de pago es tarjeta
+            if (metodoPago === 'Tarjeta de crédito/débito') {
+                const numeroTarjeta = document.getElementById('numeroTarjeta').value.trim();
+                const vencimiento = document.getElementById('vencimiento').value.trim();
+                const cvv = document.getElementById('cvv').value.trim();
+
+                if (!numeroTarjeta || numeroTarjeta.length !== 16 || isNaN(numeroTarjeta)) {
+                    isValid = false;
+                    errorMessage += 'El número de tarjeta debe tener 16 dígitos.\n';
+                }
+
+                if (!vencimiento || !/^\d{2}\/\d{2}$/.test(vencimiento)) {
+                    isValid = false;
+                    errorMessage += 'La fecha de vencimiento debe tener el formato MM/AA.\n';
+                }
+
+                if (!cvv || cvv.length !== 3 || isNaN(cvv)) {
+                    isValid = false;
+                    errorMessage += 'El CVV debe tener 3 dígitos.\n';
+                }
+            }
+
+            // Mostrar mensaje de error o el modal
+            if (!isValid) {
+                alert(errorMessage); // Mostrar errores al usuario
+            } else {
+                thankYouModal.show(); // Mostrar el modal de agradecimiento
+            }
+        });
+    }
+});
