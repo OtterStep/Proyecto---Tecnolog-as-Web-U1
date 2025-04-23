@@ -74,6 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+let totalAmount = 0;
+let resumen = "";
+
 document.addEventListener('DOMContentLoaded', function () {
     // Selecciona todas las tarjetas (cards)
     if (!window.location.pathname.includes('dulceria.html')) return;
@@ -81,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cards = document.querySelectorAll('.card');
     const quantities = Array.from({ length: cards.length }, () => 0); // Inicializa un array con ceros
     const prices = [10, 15, 20, 8, 12, 18, 25, 30,20,12,13,20]; // Precios de los productos (en el mismo orden que las tarjetas)
-    let totalAmount = 0; // Total del resumen de la compra
+     // Total del resumen de la compra
 
     // Selecciona el elemento donde se mostrará el total y la lista de productos
     const totalElement = document.getElementById('total-amount');
@@ -127,6 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const listItem = document.createElement('li');
                     const productTotal = (quantity * prices[i]).toFixed(2); // Calcula el total por producto
                     listItem.textContent = `${cards[i].querySelector('.card-title').textContent} x${quantity} - $${productTotal}`;
+                    resumen = resumen + `${cards[i].querySelector('.card-title').textContent} x${quantity} - $${productTotal}\n`;
                     productList.appendChild(listItem);
                 }
             });
@@ -155,3 +159,61 @@ button.addEventListener('click', function () {
     });
 });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Selecciona el botón "Comprar"
+    const buyButton = document.querySelector('.btn-danger');
+
+    // Agrega el evento al botón
+    buyButton.addEventListener('click', function () {
+        if (totalAmount > 0) {
+            // Si el total es mayor a 0, redirige a formato.html
+            localStorage.setItem('resumen', resumen);
+            localStorage.setItem('totalAmount', totalAmount.toFixed(2));
+            window.location.href = 'formato.html';
+        } else {
+            // Si no, muestra el modal de advertencia
+            const warningModal = new bootstrap.Modal(document.getElementById('warningModal'));
+            warningModal.show();
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (window.location.pathname.includes('formato.html')) {
+        const resumenCardBody = document.querySelector('.card-body');
+
+        // Recupera el resumen y el monto total de localStorage
+        const resumen = localStorage.getItem('resumen');
+        const totalAmount = localStorage.getItem('totalAmount');
+
+        if (resumen && totalAmount) {
+            // Crea un elemento <p> para el resumen
+            const resumenElement = document.createElement('p');
+            resumenElement.textContent = resumen;
+            resumenElement.classList.add('text-muted', 'mb-3');
+
+            // Crea un elemento <p> para el monto total
+            const totalElement = document.createElement('p');
+            totalElement.textContent = `Total a pagar: $${totalAmount}`;
+            totalElement.classList.add('fw-bold');
+
+            // Agrega los elementos al contenedor
+            resumenCardBody.appendChild(resumenElement);
+            resumenCardBody.appendChild(totalElement);
+        } else {
+            // Si no hay datos, muestra un mensaje
+            resumenCardBody.textContent = 'No hay productos seleccionados.';
+        }
+    }
+});
+
+document.getElementById('metodoPago').addEventListener('change', function () {
+    const datosTarjeta = document.getElementById('datosTarjeta');
+    if (this.value === 'Tarjeta de crédito/débito') {
+        datosTarjeta.style.display = 'block';
+    } else {
+        datosTarjeta.style.display = 'none';
+    }
+});
+
