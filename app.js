@@ -125,13 +125,13 @@ document.addEventListener('DOMContentLoaded', function () {
         // Función para actualizar la lista de productos seleccionados
         function updateProductList() {
             productList.innerHTML = ''; // Limpia la lista actual
-            resumen = ""; // Reinicia el resumen
+            resumen = ''; // Reinicia el resumen
             quantities.forEach((quantity, i) => {
                 if (quantity > 0) {
                     const listItem = document.createElement('li');
                     const productTotal = (quantity * prices[i]).toFixed(2); // Calcula el total por producto
                     listItem.textContent = `${cards[i].querySelector('.card-title').textContent} x${quantity} - $${productTotal}`;
-                    resumen = resumen + `${cards[i].querySelector('.card-title').textContent} x${quantity} - $${productTotal}<br>`;
+                    resumen = resumen + `${cards[i].querySelector('.card-title').textContent} x${quantity} - $${productTotal} <br>`;
                     productList.appendChild(listItem);
                 }
             });
@@ -191,7 +191,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (resumen && totalAmount) {
             // Crea un elemento <p> para el resumen
             const resumenElement = document.createElement('p');
-            resumenElement.textContent = resumen;
+
+            resumenElement.innerHTML = resumen;
             resumenElement.classList.add('text-muted', 'mb-3');
 
             // Crea un elemento <p> para el monto total
